@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        省：
+        <select style="width: 100px;" id="pre" onchange="chg(this);">
+            <option value="-1">请选择</option>
+        </select>
+        市：
+        <select style="width: 100px;" id="city" onchange="chg2(this)" ;></select>
+        区：
+        <select style="width: 100px;" id="area"></select>
+    </body>
+    <script>
+         //声明省
+        var pres = ["北京", "上海","河南"]; //直接声明Array
+         //声明市
+        var cities = [
+            ["北京市"],
+            ["上海市"],
+            ["郑州市", "开封市"],
+        ];
+        var areas = [
+                [
+                	 ["东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云县","延庆县","延庆镇"]   
+                ],
+                [
+                   ["黄浦区","卢湾区","徐汇区","长宁区","静安区","普陀区","闸北区","虹口区","杨浦区","闵行区","宝山区","嘉定区","浦东新区","金山区","松江区","青浦区","南汇区","奉贤区","崇明县","城桥镇"]
+                ],
+                [
+                	["中原区","二七区","管城回族区","金水区","上街区","惠济区","新郑市","登封市","新密市","巩义市","荥阳市","中牟县","城关镇"],
+                    ["鼓楼区","龙亭区","顺河回族区","禹王台区","金明区","杞县","城关镇","通许县","城关镇","尉氏县","城关镇","开封县","城关镇","兰考县","城关镇"]
+                ],
+                
+            ]
+        
+            //设置一个省的公共下标
+        var pIndex = -1;
+        var preEle = document.getElementById("pre");
+        var cityEle = document.getElementById("city");
+        var areaEle = document.getElementById("area");
+         //先设置省的值
+        for (var i = 0; i < pres.length; i++) {
+            //声明option.<option value="pres[i]">Pres[i]</option>
+            var op = new Option(pres[i], i);
+            //添加
+            preEle.options.add(op);
+        }
+        function chg(obj) {
+            if (obj.value == -1) {
+                cityEle.options.length = 0;
+                areaEle.options.length = 0;
+            }
+            //获取值
+            var val = obj.value;
+            pIndex = obj.value;
+            //获取ctiry
+            var cs = cities[val];
+            //获取默认区
+            var as = areas[val][0];
+            //先清空市
+            cityEle.options.length = 0;
+            areaEle.options.length = 0;
+            if(cs.length==0){
+            	return false;
+            }else{
+            	for (var i = 0; i < cs.length; i++) {
+                var op = new Option(cs[i], i);
+                cityEle.options.add(op);
+                }
+            }
+            
+            for (var i = 0; i < as.length; i++) {
+                var op = new Option(as[i], i);
+                areaEle.options.add(op);
+            }
+        }
+        function chg2(obj) {
+            var val = obj.selectedIndex;
+            var as = areas[pIndex][val];
+            areaEle.options.length = 0;
+            for (var i = 0; i < as.length; i++) {
+                var op = new Option(as[i], i);
+                areaEle.options.add(op);
+            }
+        }
+    </script>
+</html>
